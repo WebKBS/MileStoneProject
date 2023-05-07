@@ -1,0 +1,20 @@
+{
+  "name": "milestoneproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WebKBS/MileStoneProject.git"
+  },
+  "keywords": [],
+  "author": "Kang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WebKBS/MileStoneProject/issues"
+  },
+  "homepage": "https://github.com/WebKBS/MileStoneProject#readme"
+}
