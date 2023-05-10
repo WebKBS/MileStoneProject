@@ -10,7 +10,9 @@ const app = express();
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-app.use(express.static("public"));
+app.use(express.static("public")); // public폴더를 사용하능하게
+
+app.use(express.urlencoded({ extended: false }));
 
 app.use(authRoutes);
 
