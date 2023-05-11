@@ -1,8 +1,12 @@
 const path = require("path");
 
 const express = require("express");
+const csrf = require("csurf");
 
 const db = require("./data/database");
+
+const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
+
 const authRoutes = require("./routes/auth.routes");
 
 const app = express();
@@ -13,6 +17,11 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public")); // public폴더를 사용하능하게
 
 app.use(express.urlencoded({ extended: false }));
+
+// csrf 공격 보호
+app.use(csrf());
+// csrf를 사용하려면 세션 토큰이 필요함.
+app.use(addCsrfTokenMiddleware); // 반드시 패키지 이후에 실행해야한다. HTML input으로 사용해줘야함
 
 app.use(authRoutes);
 
