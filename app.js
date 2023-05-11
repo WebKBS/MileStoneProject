@@ -6,6 +6,7 @@ const csrf = require("csurf");
 const db = require("./data/database");
 
 const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
+const errorHandlerMiddleware = require("./middlewares/error-handler");
 
 const authRoutes = require("./routes/auth.routes");
 
@@ -24,6 +25,8 @@ app.use(csrf());
 app.use(addCsrfTokenMiddleware); // 반드시 패키지 이후에 실행해야한다. HTML input으로 사용해줘야함
 
 app.use(authRoutes);
+
+app.use(errorHandlerMiddleware);
 
 db.connectToDatabase()
   .then(() => {
