@@ -3,6 +3,10 @@ const path = require("path");
 const express = require("express");
 const csrf = require("csurf");
 
+const expressSession = require("express-session");
+
+const createSessionConfig = require("./config/session");
+
 const db = require("./data/database");
 
 const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
@@ -18,6 +22,10 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public")); // public폴더를 사용하능하게
 
 app.use(express.urlencoded({ extended: false }));
+
+//세션 사용 csrf 사용하기전 사용
+const sessionConfig = createSessionConfig();
+app.use(expressSession(sessionConfig));
 
 // csrf 공격 보호
 app.use(csrf());
