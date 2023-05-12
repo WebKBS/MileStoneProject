@@ -13,6 +13,8 @@ const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 
 const authRoutes = require("./routes/auth.routes");
+const productRoutes = require("./routes/product.routes");
+const baseRoutes = require("./routes/base.routes");
 
 const app = express();
 
@@ -32,7 +34,9 @@ app.use(csrf());
 // csrf를 사용하려면 세션 토큰이 필요함.
 app.use(addCsrfTokenMiddleware); // 반드시 패키지 이후에 실행해야한다. HTML input으로 사용해줘야함
 
+app.use(baseRoutes);
 app.use(authRoutes);
+app.use(productRoutes);
 
 app.use(errorHandlerMiddleware);
 
