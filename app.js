@@ -37,9 +37,9 @@ app.use(addCsrfTokenMiddleware); // 반드시 패키지 이후에 실행해야�
 
 app.use(checkAuthStatusMiddleware);
 
-app.use(baseRoutes);
 app.use(authRoutes);
 app.use(productRoutes);
+app.use(baseRoutes);
 
 app.use(errorHandlerMiddleware);
 
