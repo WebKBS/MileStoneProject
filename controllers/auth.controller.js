@@ -16,8 +16,14 @@ const signup = async (req, res) => {
     req.body.city
   );
 
-  // 인스턴스 전달후 user 클래스 매서드 실행
-  await user.signup();
+  try {
+    // 인스턴스 전달후 user 클래스 매서드 실행
+    await user.signup();
+  } catch (error) {
+    console.log(error);
+    next(error);
+    return;
+  }
 
   // 회원가입 완료후 로그인 페이지로 리다이렉트
   res.redirect("/login");
@@ -27,9 +33,16 @@ const getLogin = (req, res) => {
   res.render("customer/auth/login");
 };
 
-const login = async (req, res) => {
+const login = async (req, res, next) => {
   const user = new User(req.body.email, req.body.password);
-  const existingUser = await user.getUserWithSameEmail();
+  let existingUser;
+  try {
+    existingUser = await user.getUserWithSameEmail();
+  } catch (error) {
+    console.log(error);
+    next(error);
+    return;
+  }
 
   // 이메일이 일치하지 않을때
   if (!existingUser) {
