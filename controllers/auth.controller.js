@@ -36,7 +36,7 @@ const getLogin = (req, res) => {
 const login = async (req, res, next) => {
   const user = new User(req.body.email, req.body.password);
   let existingUser;
-  console.log(user);
+
   try {
     existingUser = await user.getUserWithSameEmail();
   } catch (error) {
@@ -47,6 +47,7 @@ const login = async (req, res, next) => {
 
   // 이메일이 일치하지 않을때
   if (!existingUser) {
+    console.log("이메일 틀림");
     res.redirect("/login");
     return;
   }
@@ -57,12 +58,14 @@ const login = async (req, res, next) => {
 
   // 비밀번호가 일치하지 않을때
   if (!passwordIsCorrect) {
+    console.log("패스워드 틀림");
     res.redirect("/login");
     return;
   }
 
   authUtil.createUserSession(req, existingUser, () => {
-    res.render("/");
+    console.log("aa");
+    res.redirect("/");
   });
 };
 

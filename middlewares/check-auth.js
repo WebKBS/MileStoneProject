@@ -1,7 +1,7 @@
 const checkAuthStatus = (req, res, next) => {
   // user 체크
   const uid = req.session.uid;
-  console.log(uid);
+  //console.log(uid);
 
   if (!uid) {
     return next();

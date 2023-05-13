@@ -17,14 +17,14 @@ class User {
   // 프로미스를 반환하므로 async가 필요없다.
   getUserWithSameEmail() {
     // 데이터베이스에서 user 이메일이 일치하는지 확인
-    return db.getDb().collection("user").findOne({ email: this.email });
+    return db.getDb().collection("users").findOne({ email: this.email });
   }
 
   async signup() {
     // bcrypt를 사용한 비밀번호 암호화
     const hashedPassword = await bcrypt.hash(this.password, 12);
 
-    await db.getDb().collection("user").insertOne({
+    await db.getDb().collection("users").insertOne({
       email: this.email,
       password: hashedPassword,
       name: this.name,
@@ -34,7 +34,8 @@ class User {
 
   hasMatchingPassword(hashedPassword) {
     // 비밀번호 일치 확인, 파라미터는 해시된 번호
-    bcrypt.compare(this.password, hashedPassword);
+    //console.log(hashedPassword);
+    return bcrypt.compare(this.password, hashedPassword);
   }
 }
 
