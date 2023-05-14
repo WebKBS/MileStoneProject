@@ -20,6 +20,15 @@ class User {
     return db.getDb().collection("users").findOne({ email: this.email });
   }
 
+  // 데이터베이스에서 유저 존재 유뮤 유효성검사
+  async existsAlready() {
+    const existingUser = await this.getUserWithSameEmail();
+    if (existingUser) {
+      return true;
+    }
+    return false;
+  }
+
   async signup() {
     // bcrypt를 사용한 비밀번호 암호화
     const hashedPassword = await bcrypt.hash(this.password, 12);
