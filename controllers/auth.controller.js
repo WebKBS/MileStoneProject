@@ -4,12 +4,27 @@ const validation = require("../util/validation");
 const sessionFlash = require("../util/session-flash");
 
 const getSignup = (req, res) => {
-  res.render("customer/auth/signup");
+  let sessionData = sessionFlash.getSessionData(req);
+  console.log(sessionData);
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      confirmEmail: "",
+      password: "",
+      fullname: "",
+      street: "",
+      postal: "",
+      city: "",
+    };
+  }
+
+  res.render("customer/auth/signup", { inputData: sessionData });
 };
 
 const signup = async (req, res, next) => {
   const enteredData = {
-    emal: req.body.email,
+    email: req.body.email,
+    confirmEmail: req.body["confirm-email"],
     password: req.body.password,
     fullname: req.body.fullname,
     street: req.body.street,
@@ -32,7 +47,7 @@ const signup = async (req, res, next) => {
     sessionFlash.flashDataToSession(
       req,
       {
-        errorMessage: "패스워드를 확인하세요",
+        errorMessage: "유효성 실패!",
         ...enteredData,
       },
       () => {
@@ -82,7 +97,15 @@ const signup = async (req, res, next) => {
 };
 
 const getLogin = (req, res) => {
-  res.render("customer/auth/login");
+  let sessionData = sessionFlash.getSessionData(req);
+
+  if (!sessionData) {
+    sessionData = {
+      email: "",
+      password: "",
+    };
+  }
+  res.render("customer/auth/login", { inputData: sessionData });
 };
 
 const login = async (req, res, next) => {
