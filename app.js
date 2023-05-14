@@ -16,6 +16,7 @@ const checkAuthStatusMiddleware = require("./middlewares/check-auth");
 const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const baseRoutes = require("./routes/base.routes");
+const adminRoutes = require("./routes/admin.routes");
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use(checkAuthStatusMiddleware);
 app.use(authRoutes);
 app.use(productRoutes);
 app.use(baseRoutes);
+app.use("/admin", adminRoutes); // /admin으로 시작하는 경로만
 
 app.use(errorHandlerMiddleware);
 
