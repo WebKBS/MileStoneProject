@@ -24,6 +24,7 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static("public")); // public폴더를 사용하능하게
+app.use("/products/assets", express.static("product-data")); //첫번째 파라미터로 url설정된 지정한 문자열로 시작하는 패스이름을 등록 //  저장된 프로덕트 이미지 사용할수 있도록 만듦
 
 app.use(express.urlencoded({ extended: false }));
 
