@@ -9,8 +9,7 @@ class Product {
     this.price = +productData.price; // 숫자로 변환
     this.description = productData.description;
     this.image = productData.image; // 이미지명
-    this.imagePath = `product-data/images/${productData.image}`; //이미지 저장위치
-    this.imageUrl = `/products/assets/images/${productData.image}`;
+    this.updateImageData();
     if (productData._id) {
       // id가 있는 경우에만 가능하도록 조건문 설정
       this.id = productData._id.toString(); // _id는 mongodb의 id, toString()으로 문자열 변환필요!
@@ -41,7 +40,7 @@ class Product {
       throw error;
     }
 
-    return product;
+    return new Product(product); // id객체가있는 new Product로 전달해야함
   }
 
   // 데이터베이스에있는 전체 정보를 보냄
@@ -50,6 +49,11 @@ class Product {
     return products.map((productDocument) => {
       return new Product(productDocument);
     });
+  }
+
+  updateImageData() {
+    this.imagePath = `product-data/images/${this.image}`; //이미지 저장위치
+    this.imageUrl = `/products/assets/images/${this.image}`;
   }
 
   // 데이터베이스 저장
@@ -61,8 +65,30 @@ class Product {
       description: this.description,
       image: this.image,
     };
-    await db.getDb().collection("products").insertOne(productData);
+
+    if (this.id) {
+      // 아이디가 있다면 업데이트
+      const productId = new mongodb.ObjectId(this.id);
+
+      if (!this.image) {
+        // 이미지가 존재하지않으면 삭제
+        delete productData.image;
+      }
+
+      await db
+        .getDb()
+        .collection("products")
+        .updateOne({ _id: productId }, { $set: productData });
+    } else {
+      await db.getDb().collection("products").insertOne(productData);
+    }
+  }
+
+  async replaceImage(newImage) {
+    this.image = newImage;
+    this.updateImageData();
   }
 }
 
 module.exports = Product;
+ 
