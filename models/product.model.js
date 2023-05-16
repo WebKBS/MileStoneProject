@@ -1,3 +1,5 @@
+const mongodb = require("mongodb");
+
 const db = require("../data/database");
 
 class Product {
@@ -13,6 +15,33 @@ class Product {
       // id가 있는 경우에만 가능하도록 조건문 설정
       this.id = productData._id.toString(); // _id는 mongodb의 id, toString()으로 문자열 변환필요!
     }
+  }
+
+  static async findById(productId) {
+    let prodId;
+    try {
+      prodId = new mongodb.ObjectId(productId);
+      console.log(prodId);
+    } catch (error) {
+      console.log(error);
+      console.log("아이디찾기 실패");
+      error.code = 404;
+      throw error;
+    }
+
+    const product = await db
+      .getDb()
+      .collection("products")
+      .findOne({ _id: prodId });
+
+    // 실패할수 있기때문에 에러처리
+    if (!product) {
+      const error = new Error("Object 아이디가 없습니다.");
+      error.code = 404;
+      throw error;
+    }
+
+    return product;
   }
 
   // 데이터베이스에있는 전체 정보를 보냄

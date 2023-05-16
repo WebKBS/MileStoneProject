@@ -16,4 +16,8 @@ router.post(
   adminController.createNewProduct
 );
 
+router.get("/products/:id", adminController.getUpdateProduct);
+
+router.post("/products/:id", adminController.updateProduct);
+
 module.exports = router;
