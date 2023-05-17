@@ -88,7 +88,12 @@ class Product {
     this.image = newImage;
     this.updateImageData();
   }
+
+  // async await을 사용하지 않음
+  remove() {
+    const productId = new mongodb.ObjectId(this.id);
+    return db.getDb().collection("products").deleteOne({ _id: productId });
+  }
 }
 
 module.exports = Product;
- 

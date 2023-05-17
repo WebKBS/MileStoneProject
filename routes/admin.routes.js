@@ -1,4 +1,5 @@
 const express = require("express");
+const { deleteProduct } = require("../controllers/admin.controller");
 
 const adminController = require("../controllers/admin.controller");
 const imageUploadMiddleware = require("../middlewares/image-upload");
@@ -23,5 +24,7 @@ router.post(
   imageUploadMiddleware, // 업데이트 수정에도 반드시 이미지 미들웨어가 필요함.
   adminController.updateProduct
 );
+
+router.delete("/products/:id", adminController.deleteProduct);
 
 module.exports = router;
