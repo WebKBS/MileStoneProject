@@ -12,6 +12,7 @@ const db = require("./data/database");
 const addCsrfTokenMiddleware = require("./middlewares/csrf-token");
 const errorHandlerMiddleware = require("./middlewares/error-handler");
 const checkAuthStatusMiddleware = require("./middlewares/check-auth");
+const protectRoutesMiddleware = require("./middlewares/protect-routes");
 
 const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
@@ -42,6 +43,7 @@ app.use(checkAuthStatusMiddleware);
 app.use(authRoutes);
 app.use(productRoutes);
 app.use(baseRoutes);
+app.use(protectRoutesMiddleware);
 app.use("/admin", adminRoutes); // /admin으로 시작하는 경로만
 
 app.use(errorHandlerMiddleware);
