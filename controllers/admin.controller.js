@@ -68,13 +68,17 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   let product;
   try {
-    product = await Product.findById(req, params.id);
+    product = await Product.findById(req.params.id);
     await product.remove();
   } catch (error) {
     console.log(error);
     return next(error);
   }
-  res.redirect("/admin/products");
+
+  res.json({ message: "product 삭제완료" });
+
+  // 프론트에서 삭제시에는 redirect가 필요없음!! json으로 보내야함
+  //res.redirect("/admin/products");
 };
 
 module.exports = {
