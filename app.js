@@ -19,6 +19,7 @@ const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const baseRoutes = require("./routes/base.routes");
 const adminRoutes = require("./routes/admin.routes");
+const cartRoutes = require("./routes/cart.routes");
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use(express.static("public")); // public폴더를 사용하능하게
 app.use("/products/assets", express.static("product-data")); //첫번째 파라미터로 url설정된 지정한 문자열로 시작하는 패스이름을 등록 //  저장된 프로덕트 이미지 사용할수 있도록 만듦
 
 app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 //세션 사용 csrf 사용하기전 사용
 const sessionConfig = createSessionConfig();
@@ -45,6 +47,7 @@ app.use(cartMiddleware);
 app.use(authRoutes);
 app.use(productRoutes);
 app.use(baseRoutes);
+app.use("/cart", cartRoutes); // cart로 시작하는 라우트만
 app.use(protectRoutesMiddleware);
 app.use("/admin", adminRoutes); // /admin으로 시작하는 경로만
 
