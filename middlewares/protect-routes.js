@@ -6,7 +6,7 @@ const protectRoutes = (req, res, next) => {
   }
 
   // 시작 라우트 /admim 과 isAdmin이거나 isAdmin이 아니라면
-  if (req.path.startWith("/admin") && !res.locals.isAdmin) {
+  if (req.path.startsWith("/admin") && !res.locals.isAdmin) {
     return res.redirect("/403");
   }
 

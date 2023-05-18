@@ -17,7 +17,7 @@
       <ul id="products-grid">
         <% for(const product of products ){ %>
         <li><!-- include를 사용할때 파라미터로 데이터를 전달해야한다. -->
-          <%- include('includes/product-item', {product: product}) %> 
+          <%- include('../../shared/includes/product-item.ejs', {product: product}) %> 
         </li>
       <% } %>
       </ul>
