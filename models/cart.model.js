@@ -1,6 +1,8 @@
 class Cart {
-  constructor(items = []) {
+  constructor(items = [], totalQuantity = 0, totalPrice = 0) {
     this.items = items;
+    this.totalQuantity = totalQuantity;
+    this.totalPrice = totalPrice;
   }
 
   // 카트 아이템 추가 로직
@@ -19,10 +21,16 @@ class Cart {
 
         this.items[i] = cartItme; // 배열에 저장
 
+        this.totalQuantity++; // 장바구니 아이템 개수 (프론트로 전달할 수)
+        this.totalPrice += product.price;
         return;
       }
     }
 
     this.items.push(cartItme);
+    this.totalQuantity++; // 장바구니 아이템 개수 (프론트로 전달할 수)
+    this.totalPrice += product.price;
   }
 }
+
+module.exports = Cart;
