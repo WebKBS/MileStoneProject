@@ -36,18 +36,18 @@ class Cart {
     for (let i = 0; i < this.items.length; i++) {
       const item = this.items[i];
 
-      if (item.product.id === product.id && newQuantity > 0) {
+      if (item.product.id === productId && newQuantity > 0) {
         const cartItem = { ...item };
         const quantityChange = newQuantity - item.quantity;
         cartItem.quantity = newQuantity;
-        cartItem.totalPrice = newQuantity * product.price; // 수량 증가 곱셈
+        cartItem.totalPrice = newQuantity * item.product.price; // 수량 증가 곱셈
 
         this.items[i] = cartItem; // 배열에 저장
 
         this.totalQuantity += quantityChange;
-        this.totalPrice += quantityChange * product.price;
+        this.totalPrice += quantityChange * item.product.price;
         return { updateItemPrice: cartItem.totalPrice };
-      } else if (item.product.id === product.id && newQuantity <= 0) {
+      } else if (item.product.id === productId && newQuantity <= 0) {
         this.items.splice(i, 1);
         this.totalQuantity = this.totalQuantity - item.quantity;
         this.totalPrice -= item.totalPrice;

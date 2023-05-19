@@ -32,6 +32,8 @@ const updateCartItem = (req, res) => {
     req.body.quantity
   );
 
+  //console.log(updatedItemData);
+
   req.session.cart = cart;
 
   res.json({
@@ -39,7 +41,7 @@ const updateCartItem = (req, res) => {
     updatedCartData: {
       newTotalQuantity: cart.totalQuantity,
       newTotalPrice: cart.totalPrice,
-      updatedItemPrice: updatedItemData.updatedItemPrice,
+      updatedItemPrice: updatedItemData.updateItemPrice,
     },
   });
 };
