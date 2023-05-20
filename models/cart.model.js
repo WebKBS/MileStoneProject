@@ -1,8 +1,49 @@
+const Product = require("./product.model");
+
 class Cart {
   constructor(items = [], totalQuantity = 0, totalPrice = 0) {
     this.items = items;
     this.totalQuantity = totalQuantity;
     this.totalPrice = totalPrice;
+  }
+
+  async updatePrices() {
+    const productIds = this.items.map(function (item) {
+      return item.product.id;
+    });
+
+    const products = await Product.findMultiple(productIds);
+
+    const deletableCartItemProductIds = [];
+
+    for (const cartItem of this.items) {
+      const product = products.find(function (prod) {
+        return prod.id === cartItem.product.id;
+      });
+
+      if (!product) {
+        deletableCartItemProductIds.push(cartItem.product.id);
+        continue;
+      }
+
+      cartItem.product = product;
+      cartItem.totalPrice = cartItem.quantity * cartItem.product.price;
+    }
+
+    if (deletableCartItemProductIds.length > 0) {
+      this.items = this.items.filter(function (item) {
+        return deletableCartItemProductIds.indexOf(item.product.id) < 0;
+      });
+    }
+
+    // re-calculate cart totals
+    this.totalQuantity = 0;
+    this.totalPrice = 0;
+
+    for (const item of this.items) {
+      this.totalQuantity = this.totalQuantity + item.quantity;
+      this.totalPrice = this.totalPrice + item.totalPrice;
+    }
   }
 
   // 카트 아이템 추가 로직

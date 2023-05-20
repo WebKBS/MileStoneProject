@@ -14,6 +14,7 @@ const errorHandlerMiddleware = require("./middlewares/error-handler");
 const checkAuthStatusMiddleware = require("./middlewares/check-auth");
 const protectRoutesMiddleware = require("./middlewares/protect-routes");
 const cartMiddleware = require("./middlewares/cart");
+const updateCartPricesMiddleware = require("./middlewares/update-cart-prices");
 
 const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
@@ -44,6 +45,7 @@ app.use(addCsrfTokenMiddleware); // 반드시 패키지 이후에 실행해야�
 app.use(checkAuthStatusMiddleware);
 
 app.use(cartMiddleware);
+app.use(updateCartPricesMiddleware);
 
 app.use(authRoutes);
 app.use(productRoutes);

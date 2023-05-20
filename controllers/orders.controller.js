@@ -1,8 +1,16 @@
 const Order = require("../models/order.model");
 const User = require("../models/user.model");
 
-const getOrders = (req, res) => {
-  res.render("customer/orders/all-orders");
+const getOrders = async (req, res, next) => {
+  try {
+    const orders = await Order.findAllForUser(res.locals.uid);
+    res.render("customer/orders/all-orders", {
+      orders: orders,
+    });
+  } catch (error) {
+    console.log(next);
+    next(error);
+  }
 };
 
 const addOrder = async (req, res) => {
@@ -27,7 +35,7 @@ const addOrder = async (req, res) => {
     return;
   }
 
-  res.session.cart = null; // 주문완효 후 session을 삭제해야함
+  req.session.cart = null; // 주문완효 후 session을 삭제해야함
 
   res.redirect("/orders");
 };
