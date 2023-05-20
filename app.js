@@ -15,6 +15,7 @@ const checkAuthStatusMiddleware = require("./middlewares/check-auth");
 const protectRoutesMiddleware = require("./middlewares/protect-routes");
 const cartMiddleware = require("./middlewares/cart");
 const updateCartPricesMiddleware = require("./middlewares/update-cart-prices");
+const notFoundMiddleware = require("./middlewares/not-found");
 
 const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
@@ -51,10 +52,10 @@ app.use(authRoutes);
 app.use(productRoutes);
 app.use(baseRoutes);
 app.use("/cart", cartRoutes); // cart로 시작하는 라우트만
-app.use(protectRoutesMiddleware);
-app.use("/orders", orderRoutes); // cart로 시작하는 라우트만
-app.use("/admin", adminRoutes); // /admin으로 시작하는 경로만
+app.use("/orders", protectRoutesMiddleware, orderRoutes); // cart로 시작하는 라우트만
+app.use("/admin", protectRoutesMiddleware, adminRoutes); // /admin으로 시작하는 경로만
 
+app.use(notFoundMiddleware);
 app.use(errorHandlerMiddleware);
 
 db.connectToDatabase()

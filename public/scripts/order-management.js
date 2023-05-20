@@ -35,7 +35,7 @@ async function updateOrder(event) {
   }
 
   const responseData = await response.json();
-
+  console.log(responseData);
   form.parentElement.parentElement.querySelector(
     ".badge"
   ).textContent = responseData.newStatus.toUpperCase();

@@ -29,7 +29,7 @@ const updateCartItem = (req, res) => {
 
   const updatedItemData = cart.updateItem(
     req.body.productId,
-    req.body.quantity
+    +req.body.quantity
   );
 
   //console.log(updatedItemData);

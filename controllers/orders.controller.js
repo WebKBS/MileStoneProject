@@ -15,7 +15,13 @@ const getOrders = async (req, res, next) => {
 
 const addOrder = async (req, res) => {
   const cart = res.locals.cart;
-  console.log(cart);
+  console.log(cart.items);
+
+  // 장바구니 아이템이 없을때 리다이렉트
+  if (cart.items.length === 0) {
+    res.redirect("/cart");
+    return;
+  }
 
   let userDocument;
   try {
