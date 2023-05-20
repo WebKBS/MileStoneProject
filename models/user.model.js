@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const mongodb = require("mongodb");
 
 const db = require("../data/database");
 
@@ -12,6 +13,15 @@ class User {
       postalCode: postal,
       city: city,
     }; // 객체안에 즉석으로 객체를 생성할수 있다.
+  }
+
+  static async findById(userId) {
+    const uid = new mongodb.ObjectId(userId);
+    console.log("uid", uid);
+    return db
+      .getDb()
+      .collection("users")
+      .findOne({ _id: uid }, { projection: { password: 0 } }); //projection을 사용해서 db에 password가 들어가는것을 막는다
   }
 
   // 프로미스를 반환하므로 async가 필요없다.
