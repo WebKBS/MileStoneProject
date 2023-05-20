@@ -16,7 +16,13 @@
     </ul>
     <div id="cart-total">
       <p>Total: $<span id="cart-total-price"><%= locals.cart.totalPrice.toFixed(2) %></span> </p>
-      <button class="btn">Buy Products</button>
+      <% if(locals.isAuth){ %>
+        <form action="/orders" method="POST">
+          <button class="btn">Buy Products</button>
+        </form>
+      <% }else{ %>
+        <p id="cart-total-fallback">구매하려면 로그인 하세요.</p>
+      <% } %>
     </div>
   </main>
 

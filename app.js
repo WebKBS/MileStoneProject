@@ -20,6 +20,7 @@ const productRoutes = require("./routes/product.routes");
 const baseRoutes = require("./routes/base.routes");
 const adminRoutes = require("./routes/admin.routes");
 const cartRoutes = require("./routes/cart.routes");
+const orderRoutes = require("./routes/orders.routes");
 
 const app = express();
 
@@ -49,6 +50,7 @@ app.use(productRoutes);
 app.use(baseRoutes);
 app.use("/cart", cartRoutes); // cart로 시작하는 라우트만
 app.use(protectRoutesMiddleware);
+app.use("/orders", orderRoutes); // cart로 시작하는 라우트만
 app.use("/admin", adminRoutes); // /admin으로 시작하는 경로만
 
 app.use(errorHandlerMiddleware);

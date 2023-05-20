@@ -16,7 +16,7 @@ class Cart {
       const item = this.items[i];
 
       if (item.product.id === product.id) {
-        cartItem.quantity = item.quantity + 1;
+        cartItem.quantity = +item.quantity + 1;
         cartItem.totalPrice = item.totalPrice + product.price; // price를 더해서 합계
 
         this.items[i] = cartItem; // 배열에 저장
